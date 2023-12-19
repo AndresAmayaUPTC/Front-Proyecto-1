@@ -21,7 +21,7 @@ try {
           
           data.data.forEach((location) => {
             const option = document.createElement("option");
-            option.value = location.id;
+            option.value = location._id;
             option.text = location.name;
             lugaresSelect.appendChild(option);
           });
@@ -36,6 +36,11 @@ try {
       });
   });
 
+} catch (error) {
+  console.log("Error al cargar el contenido:", error);
+}
+
+try{
   document.addEventListener("DOMContentLoaded", function () {
    
     const formulario = document.querySelector("form");
@@ -54,7 +59,7 @@ try {
         const lugarId = lugarSeleccionado.value;
 
         
-        const ubicacion = data.data.find((location) => location.id === lugarId);
+        const ubicacion = data.data.find((location) => location._id === lugarId);
 
         
         if (ubicacion) {
@@ -63,19 +68,11 @@ try {
             id: id,
             name: nombre,
             date: fecha,
-            price: precio,
-            location: {
-              _id: ubicacion._id,
-              id: ubicacion.id,
-              name: ubicacion.name,
-              address: ubicacion.address,
-              phone: ubicacion.phone,
-              capasity: ubicacion.capasity,
-            },
+            price: precio
           };
 
           
-          fetch("https://proyecto-api-zeta.vercel.app/rental", {
+          fetch(`https://proyecto-api-zeta.vercel.app/rental/${lugarId}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -83,6 +80,7 @@ try {
             body: JSON.stringify(datos),
           })
             .then((response) => {
+              console.log(response);
               if (!response.ok) {
                 throw new Error(`Error de red: ${response.status}`);
               }
@@ -103,6 +101,6 @@ try {
       }
     });
   });
-} catch (error) {
-  console.error("Error al cargar el contenido:", error);
+}catch(error){
+  console.log("Error al cargar el contenido:", error);
 }
