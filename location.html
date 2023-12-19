@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Reserva</title>
+
+  <!-- Agregar el enlace a Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary fixed-top" style="background-color: white">
+    <div class="container">
+      <a class="navbar-brand mr-auto" href="/" style="color: black;">
+        <img src="img/A.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+        Alquiler
+      </a>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <div class="card mx-auto" style="width: 600px; background-color:black; border-radius: 5%;">
+   
+      
+
+        <!-- Aquí está la tarjeta interna -->
+        <div class="card" style="width: 500px; height: 600px; background-color: black; border-color: white;">
+          <div class="card-header bg-black text-white " >
+            <h5 class="mb-0">Agregar lugar</h5>
+          </div>
+          <div class="card-body" style="overflow: auto;">
+
+            <form>
+              <!-- Campo ID -->
+              <div class="form-group">
+                <label for="id" style="color: white;">ID:</label>
+                <input type="text" class="form-control" id="id" name="id" required>
+              </div>
+
+              <!-- Campo Nombre -->
+              <div class="form-group">
+                <label for="nombre" style="color: white;">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+              </div>
+
+              <!-- Campo Dirección -->
+              <div class="form-group">
+                <label for="direccion" style="color: white;">Dirección:</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" required>
+              </div>
+
+              <!-- Campo Teléfono -->
+              <div class="form-group">
+                <label for="telefono" style="color: white;">Teléfono:</label>
+                <input type="tel" class="form-control" id="telefono" name="telefono" required>
+              </div>
+
+              <!-- Campo Capacidad -->
+              <div class="form-group">
+                <label for="capacidad" style="color: white;">Capacidad:</label>
+                <input type="number" class="form-control" id="capacidad" name="capacidad" required>
+              </div>
+
+              <!-- Botones de Enviar y Volver -->
+              <div class="row">
+                <div class="col">
+                  <button type="submit" class="btn btn-primary btn-block" style="background-color: black; border-color: white;">Enviar</button>
+                </div>
+                <div class="col">
+                  <a href="index.html" class="btn btn-secondary btn-block">Volver</a>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+      
+    </div>
+  </div>
+
+  <!-- Agregar el enlace a Bootstrap JS y Popper.js (para funcionalidad de Bootstrap) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
