@@ -32,7 +32,6 @@
     </div>
 </div>
 
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const rentalsContainer = document.getElementById("rentals-container");
@@ -47,23 +46,16 @@
             })
             .then(data => {
                 if (data.state && data.data) {
+                    
+                    const filteredRentals = data.data.filter(rental => rental.location === null);
+
                    
-                    data.data.forEach(rental => {
-                        const rentalCard = `
-                            <div class="col-md-6 col-lg-4 mb-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${rental.name}</h5>
-                                        <p class="card-text">ID: ${rental.id}</p>
-                                        <p class="card-text">Fecha: ${rental.date}</p>
-                                        <p class="card-text">Precio: $${rental.price}</p>
-                                        <p class="card-text">Lugar: ${rental.location.name}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        rentalsContainer.innerHTML += rentalCard;
+                    filteredRentals.forEach(rental => {
+                        deleteRental(rental._id);
                     });
+
+                    
+                    refreshRentalList(data.data);
                 } else {
                     throw new Error("Formato de datos incorrecto en la respuesta de la API");
                 }
@@ -72,6 +64,73 @@
                 console.error("Error al obtener la lista de alquileres:", error);
             });
     });
+
+   
+    function deleteRental(rentalId) {
+       
+        const confirmed = window.confirm("¿Estás seguro de que deseas eliminar este alquiler?");
+        
+        if (confirmed) {
+            fetch(`https://proyecto-api-zeta.vercel.app/rental/${rentalId}`, {
+                method: "DELETE",
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error de red: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data.state) {
+                    throw new Error("Error al eliminar el alquiler");
+                }
+
+                
+                window.alert("Alquiler eliminado exitosamente");
+
+                
+                location.reload();
+            })
+            .catch(error => {
+                console.error("Error al eliminar el alquiler:", error);
+            });
+        }
+    }
+
+    
+    function refreshRentalList(rentals) {
+        showRentalList(rentals);
+    }
+
+    
+    function showRentalList(rentals) {
+        const rentalsContainer = document.getElementById("rentals-container");
+        rentalsContainer.innerHTML = ""; 
+
+        rentals.forEach(rental => {
+            
+            const rentalName = rental.name ? rental.name : "Nombre no disponible";
+            
+            
+            const locationName = rental.location && rental.location.name ? rental.location.name : "Ubicación no disponible";
+
+            const rentalCard = `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">${rentalName}</h5>
+                            <p class="card-text">ID: ${rental.id}</p>
+                            <p class="card-text">Fecha: ${rental.date}</p>
+                            <p class="card-text">Precio: $${rental.price}</p>
+                            <p class="card-text">Lugar: ${locationName}</p>
+                            <button class="btn btn-secondary" onclick="deleteRental('${rental._id}')">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            rentalsContainer.innerHTML += rentalCard;
+        });
+    }
 </script>
 
 <style>

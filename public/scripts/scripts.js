@@ -89,6 +89,8 @@ try{
             .then((responseData) => {
               
               console.log("Datos guardados exitosamente:", responseData);
+              alert("Alquiler agregado exitosamente");
+              location.reload();
             })
             .catch((error) => {
               console.error("Error al enviar datos a la API:", error);
@@ -140,6 +142,8 @@ try {
             .then((responseData) => {
               
               console.log("Datos guardados exitosamente:", responseData);
+              alert("Ubicación agregada exitosamente");
+              location.reload();
             })
             .catch((error) => {
               console.error("Error al enviar datos a la API:", error);

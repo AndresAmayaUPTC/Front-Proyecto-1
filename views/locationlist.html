@@ -32,13 +32,10 @@
     </div>
 </div>
 
-
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const locationsContainer = document.getElementById("locations-container");
 
-       
         fetch("https://proyecto-api-zeta.vercel.app/location")
             .then(response => {
                 if (!response.ok) {
@@ -48,7 +45,6 @@
             })
             .then(data => {
                 if (data.state && data.data) {
-            
                     data.data.forEach(location => {
                         const locationCard = `
                             <div class="col-md-6 col-lg-4 mb-4">
@@ -59,6 +55,7 @@
                                         <p class="card-text">Dirección: ${location.address}</p>
                                         <p class="card-text">Teléfono: ${location.phone}</p>
                                         <p class="card-text">Capacidad: ${location.capasity}</p>
+                                        <button class="btn btn-secondary" onclick="deleteLocation('${location._id}')">Eliminar</button>
                                     </div>
                                 </div>
                             </div>
@@ -73,6 +70,32 @@
                 console.error("Error al obtener la lista de ubicaciones:", error);
             });
     });
+
+    function deleteLocation(locationId) {
+        if (confirm("¿Estás seguro de que quieres eliminar esta ubicación?")) {
+            fetch(`https://proyecto-api-zeta.vercel.app/location/${locationId}`, {
+                method: "DELETE",
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error de red: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.state) {
+                    alert("Ubicación eliminada exitosamente");
+                   
+                    location.reload();
+                } else {
+                    throw new Error("Error al eliminar la ubicación");
+                }
+            })
+            .catch(error => {
+                console.error("Error al eliminar la ubicación:", error);
+            });
+        }
+    }
 </script>
 
 <style>
