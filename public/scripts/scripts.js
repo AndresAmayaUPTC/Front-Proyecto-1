@@ -97,10 +97,55 @@ try{
           console.error("La ubicación seleccionada no está definida");
         }
       } catch (error) {
-        console.error("Error en el evento submit:", error);
+        console.log("Error en el evento submit:", error);
       }
     });
   });
 }catch(error){
   console.log("Error al cargar el contenido:", error);
+}
+
+try {
+  document.getElementById('lugar').addEventListener('click',(event)=>{
+    event.preventDefault()
+    
+    const id = document.getElementById('id').value
+    const name = document.getElementById('nombre').value
+    const address = document.getElementById('direccion').value
+    const phone = document.getElementById('telefono').value
+    const capasity = document.getElementById('capacidad').value
+
+    const datos = {
+      id: id,
+      name:name,
+      address:address,
+      phone:phone,
+      capasity:capasity
+    }
+
+    fetch(`https://proyecto-api-zeta.vercel.app/location/`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos),
+          })
+            .then((response) => {
+              console.log(response);
+              if (!response.ok) {
+                throw new Error(`Error de red: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then((responseData) => {
+              
+              console.log("Datos guardados exitosamente:", responseData);
+            })
+            .catch((error) => {
+              console.error("Error al enviar datos a la API:", error);
+            })
+
+  })
+} catch (error) {
+  console.log("Error en el evento submit:", error);
 }
